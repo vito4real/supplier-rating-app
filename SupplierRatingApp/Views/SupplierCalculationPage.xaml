@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SupplierRatingApp.Views.SupplierCalculationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Расчет рейтинга">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label
+                x:Name="SupplierNameLabel"
+                Text="Поставщик"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Frame Padding="16" BorderColor="#DDDDDD">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Введите данные для расчета" FontAttributes="Bold" />
+
+                    <Label Text="Общее количество деталей" />
+                    <Entry x:Name="TotalPartsEntry" Keyboard="Numeric" />
+
+                    <Label Text="Количество годных деталей" />
+                    <Entry x:Name="GoodPartsEntry" Keyboard="Numeric" />
+
+                    <Label Text="Общее количество партий" />
+                    <Entry x:Name="TotalDeliveriesEntry" Keyboard="Numeric" />
+
+                    <Label Text="Количество партий, пришедших в срок" />
+                    <Entry x:Name="OnTimeDeliveriesEntry" Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Spacing="12">
+                <Button
+                    Text="Рассчитать"
+                    Clicked="CalculateButton_Clicked" />
+
+                <Button
+                    Text="Сохранить"
+                    Clicked="SaveButton_Clicked" />
+            </HorizontalStackLayout>
+
+            <Frame Padding="16" BorderColor="#DDDDDD">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Результат" FontSize="20" FontAttributes="Bold" />
+
+                    <Label x:Name="KpiLabel" Text="KPI: -" />
+                    <Label x:Name="OtdLabel" Text="OTD: -" />
+                    <Label x:Name="FinalRatingLabel" Text="Итоговый рейтинг: -" />
+                    <Label x:Name="CategoryLabel" Text="Категория: -" />
+                    <Label x:Name="ActionLabel" Text="Действие: -" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
