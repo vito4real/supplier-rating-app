@@ -6,33 +6,33 @@ The lightweight desktop application built with .NET MAUI allows users to calcula
 
 ## 🚀 Features
 
-📦 Supplier management (create, edit, delete)
+* 📦 Supplier management (create, edit, delete)
 
-📈 Rating calculation based on:
+* 📈 Rating calculation based on:
 
   * KPI (quality of delivered parts)
   * OTD (on-time delivery)
 
-🧮 Final rating formula:
+* 🧮 Final rating formula:
 
   ```
   Final Rating = KPI * 0.7 + OTD * 0.3
   ```
 
-🏷️ Automatic supplier categorization:
+* 🏷️ Automatic supplier categorization:
 
   * **A (90–100%)** – Elite supplier
   * **B (75–89%)** – Stable supplier
   * **C (50–74%)** – Problematic supplier
   * **D (<50%)** – Unacceptable supplier
 
-📚 Rating history tracking
+* 📚 Rating history tracking
 
-📊 Rating trend visualization
+* 📊 Rating trend visualization
 
-🔍 Quick search (Google-like filtering)
+* 🔍 Quick search (Google-like filtering)
 
-🗄️ SQLite database (shared for multiple users)
+* 🗄️ SQLite database (shared for multiple users)
 
 ## 🧱 Tech Stack
 
