@@ -13,7 +13,7 @@ public class AppDatabase
         if (_isInitialized && _database is not null)
             return;
 
-        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "supplier_rating.db3");
+        string dbPath = Path.Combine(AppContext.BaseDirectory, "supplier_rating.db3");
 
         _database = new SQLiteAsyncConnection(dbPath);
 
@@ -148,6 +148,6 @@ public class AppDatabase
 
     public string GetDatabasePath()
     {
-        return Path.Combine(FileSystem.AppDataDirectory, "supplier_rating.db3");
+        return Path.Combine(AppContext.BaseDirectory, "supplier_rating.db3");
     }
 }
