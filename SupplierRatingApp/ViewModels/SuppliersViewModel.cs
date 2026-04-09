@@ -8,11 +8,26 @@ public class SuppliersViewModel : BaseViewModel
 {
     private readonly AppDatabase _appDatabase;
 
+    private readonly List<SupplierListItemViewModel> _allSuppliers = new();
+
     private bool _isBusy;
     public bool IsBusy
     {
         get => _isBusy;
         set => SetProperty(ref _isBusy, value);
+    }
+
+    private string _searchText = string.Empty;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (SetProperty(ref _searchText, value))
+            {
+                ApplyFilter();
+            }
+        }
     }
 
     public ObservableCollection<SupplierListItemViewModel> Suppliers { get; } = new();
@@ -31,7 +46,7 @@ public class SuppliersViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            Suppliers.Clear();
+            _allSuppliers.Clear();
 
             var suppliers = await _appDatabase.GetSuppliersAsync();
 
@@ -39,7 +54,7 @@ public class SuppliersViewModel : BaseViewModel
             {
                 var lastRating = await _appDatabase.GetLastRatingBySupplierIdAsync(supplier.Id);
 
-                Suppliers.Add(new SupplierListItemViewModel
+                _allSuppliers.Add(new SupplierListItemViewModel
                 {
                     Id = supplier.Id,
                     Name = supplier.Name,
@@ -55,6 +70,8 @@ public class SuppliersViewModel : BaseViewModel
                         : lastRating.CreatedAt.ToString("dd.MM.yyyy HH:mm")
                 });
             }
+
+            ApplyFilter();
         }
         finally
         {
@@ -74,5 +91,26 @@ public class SuppliersViewModel : BaseViewModel
         };
 
         await _appDatabase.SaveSupplierAsync(supplier);
+    }
+
+    private void ApplyFilter()
+    {
+        Suppliers.Clear();
+
+        IEnumerable<SupplierListItemViewModel> filtered = _allSuppliers;
+
+        if (!string.IsNullOrWhiteSpace(SearchText))
+        {
+            var search = SearchText.Trim();
+
+            filtered = filtered.Where(x =>
+                x.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                x.Notes.Contains(search, StringComparison.OrdinalIgnoreCase));
+        }
+
+        foreach (var supplier in filtered)
+        {
+            Suppliers.Add(supplier);
+        }
     }
 }
