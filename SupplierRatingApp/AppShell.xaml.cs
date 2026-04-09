@@ -8,6 +8,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
+        Routing.RegisterRoute(nameof(SupplierDetailsPage), typeof(SupplierDetailsPage));
         Routing.RegisterRoute(nameof(SupplierCalculationPage), typeof(SupplierCalculationPage));
 
         Items.Add(new ShellContent

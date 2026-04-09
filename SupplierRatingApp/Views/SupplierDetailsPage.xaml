@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SupplierRatingApp.Views.SupplierDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Карточка поставщика">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <Label
+                x:Name="SupplierNameLabel"
+                Text="Поставщик"
+                FontSize="28"
+                FontAttributes="Bold" />
+
+            <Frame Padding="16" BorderColor="#DDDDDD">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Информация о поставщике" FontSize="20" FontAttributes="Bold" />
+                    <Label x:Name="SupplierNotesLabel" Text="Комментарий: -" />
+                    <Label x:Name="LastRatingLabel" Text="Последний рейтинг: -" />
+                    <Label x:Name="LastCategoryLabel" Text="Категория: -" />
+                    <Label x:Name="LastCheckDateLabel" Text="Последняя оценка: -" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button
+                Text="Новый расчет"
+                Clicked="NewCalculationButton_Clicked" />
+
+            <Frame Padding="16" BorderColor="#DDDDDD">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="История расчетов" FontSize="20" FontAttributes="Bold" />
+
+                    <CollectionView
+                        x:Name="HistoryCollectionView"
+                        SelectionMode="None">
+
+                        <CollectionView.EmptyView>
+                            <Label
+                                Text="История расчетов пока отсутствует"
+                                FontSize="16"
+                                HorizontalOptions="Center" />
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="12" Margin="0,0,0,10" BorderColor="#E0E0E0">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="{Binding CreatedAtText}" FontAttributes="Bold" />
+                                        <Label Text="{Binding KpiText, StringFormat='KPI: {0}'}" />
+                                        <Label Text="{Binding OtdText, StringFormat='OTD: {0}'}" />
+                                        <Label Text="{Binding FinalRatingText, StringFormat='Итоговый рейтинг: {0}'}" />
+                                        <Label Text="{Binding CategoryText, StringFormat='Категория: {0}'}" />
+                                        <Label Text="{Binding RecommendedActionText, StringFormat='Действие: {0}'}" />
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

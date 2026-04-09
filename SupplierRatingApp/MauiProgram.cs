@@ -25,6 +25,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<SupplierRatingCalculator>();
         builder.Services.AddSingleton<SuppliersViewModel>();
         builder.Services.AddSingleton<SuppliersPage>();
+        builder.Services.AddTransient<SupplierDetailsViewModel>();
+        builder.Services.AddTransient<SupplierDetailsPage>();
         builder.Services.AddTransient<SupplierCalculationViewModel>();
         builder.Services.AddTransient<SupplierCalculationPage>();
         builder.Services.AddSingleton<AppShell>();

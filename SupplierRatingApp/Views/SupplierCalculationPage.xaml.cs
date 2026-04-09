@@ -53,7 +53,7 @@ public partial class SupplierCalculationPage : ContentPage
             await _viewModel.SaveAsync();
 
             await DisplayAlert("Успех", "Рейтинг сохранен.", "OK");
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.Navigation.PopAsync();
         }
         catch (Exception ex)
         {

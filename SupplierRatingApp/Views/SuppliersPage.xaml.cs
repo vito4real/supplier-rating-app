@@ -72,7 +72,7 @@ public partial class SuppliersPage : ContentPage
             if (selectedItem is null)
                 return;
 
-            var page = _serviceProvider.GetRequiredService<SupplierCalculationPage>();
+            var page = _serviceProvider.GetRequiredService<SupplierDetailsPage>();
             await page.InitializeAsync(selectedItem.Id);
 
             if (sender is CollectionView collectionView)
