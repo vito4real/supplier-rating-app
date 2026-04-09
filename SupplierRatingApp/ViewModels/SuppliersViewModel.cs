@@ -67,7 +67,8 @@ public class SuppliersViewModel : BaseViewModel
                         : $"{lastRating.CategoryCode} — {lastRating.CategoryName}",
                     LastCheckDateText = lastRating is null
                         ? "-"
-                        : lastRating.CreatedAt.ToString("dd.MM.yyyy HH:mm")
+                        : lastRating.CreatedAt.ToString("dd.MM.yyyy HH:mm"),
+                    CategoryColor = GetCategoryColor(lastRating?.CategoryCode)
                 });
             }
 
@@ -112,5 +113,17 @@ public class SuppliersViewModel : BaseViewModel
         {
             Suppliers.Add(supplier);
         }
+    }
+
+    private Color GetCategoryColor(string? categoryCode)
+    {
+        return categoryCode switch
+        {
+            "A" => Colors.Blue,
+            "B" => Colors.Green,
+            "C" => Colors.Orange,
+            "D" => Colors.Red,
+            _ => Colors.Gray
+        };
     }
 }

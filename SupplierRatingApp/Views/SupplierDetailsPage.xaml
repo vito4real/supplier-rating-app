@@ -20,14 +20,26 @@
                     <Label Text="Информация о поставщике" FontSize="20" FontAttributes="Bold" />
                     <Label x:Name="SupplierNotesLabel" Text="Комментарий: -" />
                     <Label x:Name="LastRatingLabel" Text="Последний рейтинг: -" />
-                    <Label x:Name="LastCategoryLabel" Text="Категория: -" />
+                    <Label x:Name="LastCategoryLabel"
+                        Text="Категория: -"
+                        FontAttributes="Bold" />
                     <Label x:Name="LastCheckDateLabel" Text="Последняя оценка: -" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Button
-                Text="Новый расчет"
-                Clicked="NewCalculationButton_Clicked" />
+            <HorizontalStackLayout Spacing="12">
+                <Button
+                    Text="Новый расчет"
+                    Clicked="NewCalculationButton_Clicked" />
+
+                <Button
+                    Text="Редактировать"
+                    Clicked="EditSupplierButton_Clicked" />
+
+                <Button
+                    Text="Удалить"
+                    Clicked="DeleteSupplierButton_Clicked" />
+            </HorizontalStackLayout>
 
             <Frame Padding="16" BorderColor="#DDDDDD">
                 <VerticalStackLayout Spacing="12">

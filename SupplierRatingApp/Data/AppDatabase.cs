@@ -102,6 +102,50 @@ public class AppDatabase
         return await db.DeleteAsync(rating);
     }
 
+    public async Task<int> DeleteRatingsBySupplierIdAsync(int supplierId)
+    {
+        var db = await GetDatabaseAsync();
+        var ratings = await db.Table<SupplierRating>()
+            .Where(x => x.SupplierId == supplierId)
+            .ToListAsync();
+
+        int deletedCount = 0;
+
+        foreach (var rating in ratings)
+        {
+            deletedCount += await db.DeleteAsync(rating);
+        }
+
+        return deletedCount;
+    }
+
+    public async Task<int> DeleteSupplierByIdAsync(int supplierId)
+    {
+        var db = await GetDatabaseAsync();
+        var supplier = await db.Table<Supplier>()
+            .FirstOrDefaultAsync(x => x.Id == supplierId);
+
+        if (supplier is null)
+            return 0;
+
+        return await db.DeleteAsync(supplier);
+    }
+
+    public async Task<int> UpdateSupplierAsync(int supplierId, string name, string? notes)
+    {
+        var db = await GetDatabaseAsync();
+        var supplier = await db.Table<Supplier>()
+            .FirstOrDefaultAsync(x => x.Id == supplierId);
+
+        if (supplier is null)
+            return 0;
+
+        supplier.Name = name;
+        supplier.Notes = notes;
+
+        return await db.UpdateAsync(supplier);
+    }
+
     public string GetDatabasePath()
     {
         return Path.Combine(FileSystem.AppDataDirectory, "supplier_rating.db3");

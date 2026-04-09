@@ -13,4 +13,6 @@ public class SupplierListItemViewModel
     public string CategoryText { get; set; } = "-";
 
     public string LastCheckDateText { get; set; } = "-";
+
+    public Color CategoryColor { get; set; } = Colors.Gray;
 }

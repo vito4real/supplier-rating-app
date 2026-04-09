@@ -44,6 +44,13 @@ public class SupplierDetailsViewModel : BaseViewModel
         set => SetProperty(ref _lastCategoryText, value);
     }
 
+    private Color _lastCategoryColor = Colors.Gray;
+    public Color LastCategoryColor
+    {
+        get => _lastCategoryColor;
+        set => SetProperty(ref _lastCategoryColor, value);
+    }
+
     private string _lastCheckDateText = "-";
     public string LastCheckDateText
     {
@@ -99,6 +106,8 @@ public class SupplierDetailsViewModel : BaseViewModel
         LastCategoryText = lastRating is null
             ? "-"
             : $"{lastRating.CategoryCode} — {lastRating.CategoryName}";
+
+        LastCategoryColor = GetCategoryColor(lastRating?.CategoryCode);
 
         LastCheckDateText = lastRating is null
             ? "-"
@@ -165,6 +174,37 @@ public class SupplierDetailsViewModel : BaseViewModel
                 Name = "Rating, %",
                 Labeler = value => $"{value:F0}%"
             }
+        };
+    }
+
+    public async Task UpdateSupplierAsync(string name, string? notes)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Название поставщика не может быть пустым.");
+
+        await _appDatabase.UpdateSupplierAsync(
+            SupplierId,
+            name.Trim(),
+            string.IsNullOrWhiteSpace(notes) ? null : notes.Trim());
+
+        await LoadAsync(SupplierId);
+    }
+
+    public async Task DeleteSupplierAsync()
+    {
+        await _appDatabase.DeleteRatingsBySupplierIdAsync(SupplierId);
+        await _appDatabase.DeleteSupplierByIdAsync(SupplierId);
+    }
+
+    private Color GetCategoryColor(string? categoryCode)
+    {
+        return categoryCode switch
+        {
+            "A" => Colors.Blue,
+            "B" => Colors.Green,
+            "C" => Colors.Orange,
+            "D" => Colors.Red,
+            _ => Colors.Gray
         };
     }
 }
