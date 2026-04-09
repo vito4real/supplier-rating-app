@@ -3,6 +3,8 @@ using SupplierRatingApp.Data;
 using SupplierRatingApp.Services;
 using SupplierRatingApp.ViewModels;
 using SupplierRatingApp.Views;
+using LiveChartsCore.SkiaSharpView.Maui;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace SupplierRatingApp;
 
@@ -14,6 +16,8 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

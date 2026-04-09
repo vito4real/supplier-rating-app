@@ -13,6 +13,7 @@ public partial class SupplierDetailsPage : ContentPage
         InitializeComponent();
         _viewModel = viewModel;
         _serviceProvider = serviceProvider;
+        BindingContext = _viewModel;
     }
 
     public async Task InitializeAsync(int supplierId)

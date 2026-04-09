@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 using SupplierRatingApp.Data;
 
 namespace SupplierRatingApp.ViewModels;
@@ -47,6 +49,27 @@ public class SupplierDetailsViewModel : BaseViewModel
     {
         get => _lastCheckDateText;
         set => SetProperty(ref _lastCheckDateText, value);
+    }
+
+    private ISeries[] _ratingSeries = Array.Empty<ISeries>();
+    public ISeries[] RatingSeries
+    {
+        get => _ratingSeries;
+        set => SetProperty(ref _ratingSeries, value);
+    }
+
+    private Axis[] _xAxes = Array.Empty<Axis>();
+    public Axis[] XAxes
+    {
+        get => _xAxes;
+        set => SetProperty(ref _xAxes, value);
+    }
+
+    private Axis[] _yAxes = Array.Empty<Axis>();
+    public Axis[] YAxes
+    {
+        get => _yAxes;
+        set => SetProperty(ref _yAxes, value);
     }
 
     public ObservableCollection<SupplierRatingHistoryItemViewModel> RatingHistory { get; } = new();
@@ -98,5 +121,50 @@ public class SupplierDetailsViewModel : BaseViewModel
                 RecommendedActionText = rating.RecommendedAction
             });
         }
+
+        var chartRatings = ratings
+            .OrderBy(r => r.CreatedAt)
+            .ToList();
+
+        var values = chartRatings
+            .Select(r => r.FinalRatingPercent)
+            .ToArray();
+
+        var labels = chartRatings
+            .Select(r => r.CreatedAt.ToString("dd.MM"))
+            .ToArray();
+
+        RatingSeries = values.Length == 0
+            ? Array.Empty<ISeries>()
+            : new ISeries[]
+            {
+                new LineSeries<double>
+                {
+                    Values = values,
+                    Name = "Final Rating",
+                    GeometrySize = 10,
+                    LineSmoothness = 0.6
+                }
+            };
+
+        XAxes = new[]
+        {
+            new Axis
+            {
+                Labels = labels,
+                LabelsRotation = 0
+            }
+        };
+
+        YAxes = new[]
+        {
+            new Axis
+            {
+                MinLimit = 0,
+                MaxLimit = 100,
+                Name = "Rating, %",
+                Labeler = value => $"{value:F0}%"
+            }
+        };
     }
 }
